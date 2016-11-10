@@ -17,7 +17,7 @@ class Program
         // Record that the initial house has a present already
         Grid[SantaX, SantaY] = true;
         
-        using (StreamReader reader = new StreamReader("input.txt"))
+        using (StreamReader reader = new StreamReader("input"))
         {
             do
             {
@@ -47,7 +47,7 @@ class Program
         SantaY = GRID_SIZE / 2;
         Grid[SantaX, SantaY] = true;
         
-        using (StreamReader reader = new StreamReader("input.txt"))
+        using (StreamReader reader = new StreamReader("input"))
         {
             do
             {
