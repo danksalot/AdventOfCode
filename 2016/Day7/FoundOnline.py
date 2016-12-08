@@ -1,3 +1,5 @@
+#Solution by user Barnybug found here: https://www.reddit.com/r/adventofcode/comments/5gy1f2/2016_day_7_solutions/
+
 import re
 
 def abba(x):
