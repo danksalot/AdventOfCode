@@ -9,7 +9,7 @@ def part1Match(line):
 def part2Match(outOfBrackets, inBrackets):
 	return any(a == c and a != b and b+a+b in inBrackets for a, b, c in zip(outOfBrackets, outOfBrackets[1:], outOfBrackets[2:]))
 
-with open("Input.txt") as inputFile:
+with open("Input") as inputFile:
 	lines = inputFile.readlines()
     
 for line in lines:

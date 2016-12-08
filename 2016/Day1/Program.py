@@ -45,7 +45,7 @@ CurrentOrientation = 0
 route = [[0 for x in range(300)] for y in range(300)] 
 route[0][0] = 1
 
-inputArray = open('Input.txt', 'r').read().split(", ")
+inputArray = open('Input', 'r').read().split(", ")
 
 for instruction in inputArray:
 	CurrentOrientation = Turn(CurrentOrientation, instruction[0][0])

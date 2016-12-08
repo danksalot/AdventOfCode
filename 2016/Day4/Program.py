@@ -27,7 +27,7 @@ def GetParts(line):
 
 SectorSum = 0
 
-with open("input.txt") as inputFile:
+with open("Input") as inputFile:
 	lines = inputFile.readlines()
     
 for line in lines:

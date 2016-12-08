@@ -21,7 +21,7 @@ def rotateColumn(grid, index, distance):
 
 grid = [[0 for x in range(50)] for y in range(6)]
 
-with open("Input.txt") as inputFile:
+with open("Input") as inputFile:
 	lines = inputFile.readlines()
     
 for line in lines:

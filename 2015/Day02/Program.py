@@ -1,7 +1,7 @@
 paperSum = 0
 ribbonSum = 0
 
-with open("input.txt") as inputFile:
+with open("Input") as inputFile:
     boxes = inputFile.readlines()
     
 for line in boxes:

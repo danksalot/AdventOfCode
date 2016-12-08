@@ -2,7 +2,7 @@ import operator
 
 chars = [[],[],[],[],[],[],[],[]]
 
-with open("Input.txt") as inputFile:
+with open("Input") as inputFile:
 	lines = inputFile.readlines()
     
 for line in lines:

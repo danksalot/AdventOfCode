@@ -4,7 +4,7 @@ def IsValidTriangle(sides):
 
 count = 0
 
-with open("input.txt") as inputFile:
+with open("Input") as inputFile:
 	lines = inputFile.readlines()
 
 for step in range(0, len(lines), 3):
