@@ -5,9 +5,9 @@ def getDecompressedLength(string):
 	if marker == None:
 		return len(string)
 	else:
-		num, times = map(int, re.search("\((\d+)x(\d+)\)", string).groups())
-		length = marker.start() + (num * times)		
-		index = marker.end() + num
+		numChars, times = map(int, re.search("\((\d+)x(\d+)\)", string).groups())
+		length = marker.start() + (numChars * times)		
+		index = marker.end() + numChars
 		return length + getDecompressedLength(string[index:])
 
 with open("Input") as inputFile:
