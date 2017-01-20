@@ -1,20 +1,20 @@
 import string
 
-# Caesar function obtained from http://stackoverflow.com/questions/8886947/caesar-cipher-function-in-python
+# Caesar function adapted from http://stackoverflow.com/questions/8886947/caesar-cipher-function-in-python
 # answer by amillerrhodes
-def caesar(plaintext, shift):
+def Shift(text, distance):
     alphabet = string.ascii_lowercase
-    shifted_alphabet = alphabet[shift:] + alphabet[:shift]
+    shifted_alphabet = alphabet[distance:] + alphabet[:distance]
     table = string.maketrans(alphabet, shifted_alphabet)
-    return plaintext.translate(table)
+    return text.translate(table)
 
 def IsValidRoom(names, checksum):
 	allNames = names.replace(" ", "")
-	count=lambda s:list([c, s.count(c)] for c in set(s))
+	count = lambda s : list([char, s.count(char)] for char in set(s))
 	counts = count(allNames)
 	counts.sort(key = lambda x: x[0])
 	counts.sort(key = lambda x: x[1], reverse=True)
-	value = counts[0][0] + counts[1][0] + counts[2][0] + counts [3][0] + counts[4][0]
+	value = counts[0][0] + counts[1][0] + counts[2][0] + counts[3][0] + counts[4][0]
 	return value == checksum
 
 def GetParts(line):
@@ -34,7 +34,7 @@ for line in lines:
 	names, checksum, sectorID = GetParts(line)
 	if IsValidRoom(names, checksum):
 		SectorSum += sectorID
-		shiftedRoomName = caesar(names, sectorID % 26).strip()
+		shiftedRoomName = Shift(names, sectorID % 26).strip()
 		print "SectorID:", sectorID, "Room Name:", shiftedRoomName
 		if (shiftedRoomName == "northpole object storage"):
 			targetSectorID = sectorID
