@@ -8,9 +8,9 @@ with open('Input') as inFile:
 	for line in inFile:
 		numLines += 1
 		line = line.rstrip()
-		words = line.split(' ')
 
 		# Part 1
+		words = line.split(' ')
 		for word in words:
 			if line.count(word) > 1:
 				part1Violations += 1
