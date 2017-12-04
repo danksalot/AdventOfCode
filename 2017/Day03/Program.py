@@ -40,10 +40,10 @@ def spiral(newCellValueFunction, breakOutCondition, returnFunction):
         matrix[y][x] = cellValue
 
         # Turn left if we can
-        new_dx, new_dy = turn_left[dx,dy]
-        new_x, new_y = x + new_dx, y + new_dy
-        if (0 <= new_x < width and 0 <= new_y < height and
-            matrix[new_y][new_x] == 0):
+        new_dx, new_dy = turn_left[dx, dy]
+        new_x = x + new_dx
+        new_y = y + new_dy
+        if (0 <= new_x < width and 0 <= new_y < height and matrix[new_y][new_x] == 0):
             x, y = new_x, new_y
             dx, dy = new_dx, new_dy
 
