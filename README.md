@@ -3,4 +3,6 @@
 
 I have added the puzzles from 2015 here, and will be adding my solutions to them as soon as I can locate where I put them.
 
-I can't wait to see if Eric has new puzzles for us in 2016!
+EDIT: Added puzzles and solutions from 2016
+
+EDIT: Currently going through the 2017 calendar
