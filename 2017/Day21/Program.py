@@ -1,9 +1,6 @@
 import numpy as np
 from math import sqrt
 
-rules = []
-picture = np.array([['.','#','.'],['.','.','#'],['#','#','#']])
-
 def splitArray(array, numRows, numCols):
 	height, width = array.shape
 	return (array.reshape(height // numRows, numRows, -1, numCols).swapaxes(1, 2).reshape(-1, numRows, numCols))
@@ -11,6 +8,28 @@ def splitArray(array, numRows, numCols):
 def combineArray(array, height, width):
 	n, numRows, numCols = array.shape
 	return (array.reshape(height // numRows, -1, numRows, numCols).swapaxes(1, 2).reshape(height, width))
+
+def enhance(pic, rules, passes):
+	for i in range(passes):
+		newArray = []
+		currentWidth = len(pic[0])
+		arrayParts = []
+		if (currentWidth % 2 == 0):
+			arrayParts = splitArray(pic, 2, 2)
+		else:
+			arrayParts = splitArray(pic, 3, 3)
+		newWidth = int(currentWidth + sqrt(len(arrayParts)))
+		for part in arrayParts:
+			newArray.append(processUsingRules(part, rules))
+			for rule in rules:
+				if '/'.join([''.join(x) for x in part]) in rule[:-1]:
+					newArray.append(rule[-1])
+		pic = combineArray(np.array(newArray), newWidth, newWidth)
+
+	return pic
+
+rules = []
+picture = np.array([['.','#','.'],['.','.','#'],['#','#','#']])
 
 with open('Input') as inFile:
 	lines = map(str.rstrip, inFile.readlines())
@@ -39,29 +58,5 @@ for line in lines:
 
 	rules.append([b1, b2, b3, b4, b5, b6, b7, b8, after])
 
-#for rule in rules:
-	#print(rule)
-
-for i in range(1):
-	newArray = np.array([])
-	currentWidth = len(picture[0])
-	arrayParts = []
-	if (currentWidth % 2 == 0):
-		arrayParts = splitArray(picture, 2, 2)
-	else:
-		arrayParts = splitArray(picture, 3, 3)
-	newWidth = int(currentWidth + sqrt(len(arrayParts)))
-	print(newWidth)
-	for i, part in enumerate(arrayParts):
-
-		for rule in rules:
-			if '/'.join([''.join(x) for x in part]) in rule[:-1]:
-				arrayParts[i] = rule[-1]
-			#else:
-				#print('Nope')
-		#print(part)
-
-	print(arrayParts)
-	picture = combineArray(arrayParts, 12, 12)
-
-	print(picture)
+print('Pixels on after 5 iterations:', (enhance(picture, rules, 5) == '#').sum())
+print('Pixels on after 18 iterations:', (enhance(picture, rules, 18) == '#').sum())
