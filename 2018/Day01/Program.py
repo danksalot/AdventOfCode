@@ -5,8 +5,7 @@ firstTime = True
 while True:
 	with open('Input') as inFile:
 		for line in inFile.read().splitlines():
-			num = line.replace('+', '')
-			total += int(num)
+			total += int(line)
 			if (total in values):
 				print('Part 2:', total)
 				exit();
