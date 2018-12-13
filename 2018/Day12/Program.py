@@ -15,5 +15,8 @@ with open('Input') as inFile:
 	plants = [i for i, c in enumerate(lines[0][15:]) if c == "#"]
 	rules = dict((line[:5], line[9] == "#") for line in lines[2:])
 
-print('Part 1:', runGenerations(rules, plants, 20))
-print('Part 2:', runGenerations(rules, plants, 100) + ((50000000000 - 100) * 22))
+    print('Part 1:', runGenerations(rules, plants, 20))
+    score199 = runGenerations(rules, plants, 199)
+    score200 = runGenerations(rules, plants, 200)
+    constantIncrease = score200 - score199
+    print('Part 2:', runGenerations(rules, plants, 200) + ((50000000000 - 200) * constantIncrease))
