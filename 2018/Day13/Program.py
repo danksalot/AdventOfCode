@@ -78,7 +78,6 @@ for y in range(size):
 			carts.append(Cart((y,x), ToDirection(grid[y][x]), 0))
 			grid[y][x] = '-' if grid[y][x] in '<>' else '|'
 
-ticks = 0
 allClear = True
 while True:
 	crashes, carts = ProcessTick(grid, carts)
