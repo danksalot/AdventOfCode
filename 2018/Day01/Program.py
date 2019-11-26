@@ -10,6 +10,6 @@ with open('Input') as inFile:
 			total += int(line)
 			if (total in values):
 				print('Part 2:', total)
-				exit();
+				exit()
 			else:
 				values.append(total)
