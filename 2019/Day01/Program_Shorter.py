@@ -4,5 +4,5 @@ def calcCompounding(weight): 	return weight // 3 - 2 + calcCompounding(weight //
 with open('Input') as inFile:
 	lines = inFile.readlines()
 
-	print("Part 1:", sum(map(lambda x: x // 3 - 2, (int(line) for line in lines))))
+	print("Part 1:", sum(map(calcFuel, (int(line) for line in lines))))
 	print("Part 2:", sum(map(calcCompounding, (int(line) for line in lines))))
