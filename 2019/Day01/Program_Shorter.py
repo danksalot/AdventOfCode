@@ -1,5 +1,5 @@
-def calcFuel(weight): 			return weight // 3 - 2
-def calcCompounding(weight): 	return weight // 3 - 2 + calcCompounding(weight // 3 - 2) if (weight // 3 - 2) > 0 else 0
+def calcFuel(weight): return weight // 3 - 2
+def calcCompounding(weight): return weight // 3 - 2 + calcCompounding(weight // 3 - 2) if (weight // 3 - 2) > 0 else 0
 
 with open('Input') as inFile:
 	lines = inFile.readlines()
