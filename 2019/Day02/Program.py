@@ -25,3 +25,4 @@ for i in range(99):
 
 		if (currentInstructionSet[0] == TARGET):
 			print("Part 2:", i * 100 + j)
+			exit()
