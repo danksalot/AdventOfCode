@@ -12,18 +12,20 @@ def getParameters(numParams):
 	params = []
 	for i in range(1, numParams + 1):
 		mode = opCodeValue[index] if abs(index) <= len(opCodeValue) else 0
-		# print("mode:", mode)
 		index -= 1
 		params.append(instructionSet[instructionSet[instructionPointer + i]] if mode == "0" else instructionSet[instructionPointer + i])
 	
 	return params
+
+def setValue(index, value):
+	global instructionSet
+	instructionSet[index] = value
 
 def add():
 	global instructionSet
 	global instructionPointer
 
 	left, right = getParameters(2)
-	# print("Adding", left, "and", right)
 	resultIndex = instructionSet[instructionPointer + 3]
 	instructionSet[resultIndex] = left + right
 	instructionPointer += 4
@@ -33,7 +35,6 @@ def mult():
 	global instructionPointer
 
 	left, right = getParameters(2)
-	# print("Multiplying", left, "and", right)
 	resultIndex = instructionSet[instructionPointer + 3]
 	instructionSet[resultIndex] = left * right
 	instructionPointer += 4
@@ -43,7 +44,6 @@ def save():
 	global instructionPointer
 
 	resultIndex = instructionSet[instructionPointer + 1]
-	# print("Saving", inputValue, "in position", resultIndex)
 	instructionSet[resultIndex] = inputValue
 	instructionPointer += 2
 
@@ -51,9 +51,7 @@ def out():
 	global instructionSet
 	global instructionPointer
 
-	# resultIndex = instructionSet[instructionPointer + 1]
 	resultValue = getParameters(1)[0]
-	# print(instructionPointer)
 	print("Output:", resultValue)
 	instructionPointer += 2
 
@@ -62,12 +60,10 @@ def jit():
 	global instructionPointer
 
 	left, target = getParameters(2)
-	# print("jit", left, target)
 	if left != 0:
 		instructionPointer = target
 	else:
 		instructionPointer += 3
-	# print("pc", instructionPointer)
 
 def jnt():
 	global instructionSet
@@ -114,8 +110,6 @@ def processInstruction():
 	}
 
 	opCode = int(str(instructionSet[instructionPointer])[-2:])
-	# print("opCode", instructionSet[instructionPointer])
-
 	func = switcher.get(opCode, lambda: "nothing")
 	return func()
 
@@ -126,13 +120,10 @@ def setInput(value):
 def runProgram(instructions):
 	global instructionSet
 	global instructionPointer
-	global step
 
 	instructionSet = instructions
 	instructionPointer = 0
-	step = 0
 
 	keepGoing = 0
 	while keepGoing != -1:
 		keepGoing = processInstruction()
-		# print(instructionSet)
