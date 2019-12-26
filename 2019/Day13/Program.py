@@ -11,17 +11,14 @@ tileId = { 0: ' ', 1: '|', 2: '#', 3: '-', 4: 'o'}
 inputs = [0,0,0,0,0,0,0,0,1,1,1,1,1,1]
 score = 0
 
-clear = lambda: os.system('cls') #on Windows System
+clear = lambda: os.system('cls')
 
 def preventOverflow(x, y):
 	global screen
-	# print("Got x:", x, ", y:", y)
-
 	x += 1
 	y += 1
 
 	if len(screen) < y:
-		# print("Increasing rows by", y - len(screen))
 		for i in range(y - len(screen)):
 			screen.append([])
 
