@@ -1,5 +1,5 @@
 from itertools import combinations
-from numpy import prod
+from math import prod
 
 with open('Input') as inFile:
 	lines = [int(x) for x in inFile.readlines()]
@@ -9,5 +9,3 @@ with open('Input') as inFile:
 
 	for x in combinations(lines, 3):
 		if sum(x) == 2020: print('Part 2: ' + str(prod(x)))
-
-				
