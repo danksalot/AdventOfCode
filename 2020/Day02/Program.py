@@ -14,10 +14,10 @@ for line in lines:
 
 	count = password.count(letter)
 	if count >= lower and count <= upper:
-		validCount1 = validCount1 + 1
+		validCount1 += 1
 
 	if (password[lower - 1] == letter or password[upper - 1] == letter) and password[lower - 1] != password[upper - 1]:
-		validCount2 = validCount2 + 1
+		validCount2 += 1
 
 print('Part 1:', validCount1)
 print('Part 2:', validCount2)
