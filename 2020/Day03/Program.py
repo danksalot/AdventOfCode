@@ -14,5 +14,4 @@ with open('Input') as inFile:
 	lines = inFile.read().splitlines()
 
 	print('Part 1:', countTrees(lines, 3, 1))
-
 	print('Part 2:', (countTrees(lines, 1, 1) * countTrees(lines, 3, 1) * countTrees(lines, 5, 1) * countTrees(lines, 7, 1) * countTrees(lines, 1, 2)))
