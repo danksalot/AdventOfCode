@@ -1,20 +1,13 @@
 def countTrees(lines, stepX, stepY):
-	currentX = 0
-	currentY = 0
+	currentX, currentY, treeCount = 0, 0, 0
 	width = len(lines[0])
-	treeCount = 0
 
 	while currentY < len(lines):
-		spot = lines[currentY][currentX]
-
-		if spot == '#':
-			treeCount += 1
-
+		if lines[currentY][currentX] == '#': treeCount += 1
 		currentX = (currentX + stepX) % width
 		currentY += stepY
 
 	return treeCount
-
 
 
 with open('Input') as inFile:
@@ -23,5 +16,3 @@ with open('Input') as inFile:
 	print('Part 1:', countTrees(lines, 3, 1))
 
 	print('Part 2:', (countTrees(lines, 1, 1) * countTrees(lines, 3, 1) * countTrees(lines, 5, 1) * countTrees(lines, 7, 1) * countTrees(lines, 1, 2)))
-
-	
