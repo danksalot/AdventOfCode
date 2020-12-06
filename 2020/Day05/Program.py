@@ -1,29 +1,8 @@
-def findRow(boardingPass):
-	lower, upper = 0, 127
-	for direction in boardingPass[:7]:
-		midpoint = lower + ((upper - lower) // 2)
-		lower = midpoint + 1 if direction == 'B' else lower
-		upper = upper if direction == 'B' else midpoint
-	return lower
-
-def findColumn(boardingPass):
-	lower, upper = 0, 7
-	for direction in boardingPass[7:]:
-		midpoint = lower + ((upper - lower) // 2)
-		lower = midpoint + 1 if direction == 'R' else lower
-		upper = upper if direction == 'R' else midpoint
-	return lower
+def calculateSeatId(boardingPass):
+	return int(boardingPass.translate(str.maketrans("FBLR", "0101")), 2)
 
 with open('Input') as inFile:
-	boardingPasses = inFile.read().splitlines()
-
-seatIds = []
-
-for boardingPass in boardingPasses:
-	row = findRow(boardingPass)
-	column = findColumn(boardingPass)
-	seatId = (row * 8) + column
-	seatIds.append(seatId)
-
+	seatIds = list(map(calculateSeatId, inFile.read().splitlines()))
+	
 print('Part 1:', max(seatIds))
 print('Part 2:', sum(range(min(seatIds), max(seatIds) + 1)) - sum(seatIds))
