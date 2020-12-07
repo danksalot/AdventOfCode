@@ -1,9 +1,10 @@
 def findContainers(rules, bagDesc):
-	canContain = []
+	containers = []
 	for rule in rules:
-		if bagDesc in rules[rule].keys():
-			canContain.append(rule)
-	return canContain
+		if bagDesc in rules[rule]:
+			containers.append(rule)
+			containers.extend(findContainers(rules, rule))
+	return set(containers)
 
 def findContents(rules, bagDesc):
 	return sum([rules[bagDesc][childBagDesc] * findContents(rules, childBagDesc) for childBagDesc in rules[bagDesc]]) + 1
@@ -24,16 +25,17 @@ for line in lines:
 	if len(parts) >= 20:
 		rules[parts[0] + parts[1]][parts[17] + parts[18]] = int(parts[16])
 
-containers = ['shinygold']
-previousCount = len(containers)
-while True:
-	new = []
-	for container in containers:
-		new.extend(findContainers(rules, container))
-	containers = list(set(containers + new))
-	if len(containers) == previousCount:
-		break
-	previousCount = len(containers)
-
-print('Part 1:', len(containers) - 1)
+print('Part 1:', len(findContainers(rules, 'shinygold')))
 print('Part 2:', findContents(rules, 'shinygold') - 1)
+
+
+
+
+
+
+# def findContents_verbose(rules, bagDesc):
+# 	total = 1
+# 	for childBagDesc in rules[bagDesc]:
+# 		multiplier = rules[bagDesc][childBagDesc]
+# 		total += multiplier * findContents_verbose(rules, childBagDesc)
+# 	return total
