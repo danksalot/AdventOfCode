@@ -18,22 +18,19 @@ for line in lines:
 	digits = re.findall(r'\d+', line)
 	id = int(digits[0])
 
-	reds = re.findall(r'(\d+) red', line)
-	reds = [int(r) for r in reds]
+	reds = [int(r) for r in re.findall(r'(\d+) red', line)]
 	if max(reds) > minRed:
 		minRed = max(reds)
 	if max(reds) > maxRed:
 		possible = False
 
-	greens = re.findall(r'(\d+) green', line)
-	greens = [int(g) for g in greens]
+	greens = [int(g) for g in re.findall(r'(\d+) green', line)]
 	if max(greens) > minGreen:
 		minGreen = max(greens)
 	if max(greens) > maxGreen:
 		possible = False
 
-	blues = re.findall(r'(\d+) blue', line)
-	blues = [int(b) for b in blues]
+	blues = [int(b) for b in re.findall(r'(\d+) blue', line)]
 	if max(blues) > minBlue:
 		minBlue = max(blues)
 	if max(blues) > maxBlue:
