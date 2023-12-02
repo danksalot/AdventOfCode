@@ -11,7 +11,7 @@ for line in lines:
 	maxGreens = max([int(g) for g in re.findall(r'(\d+) green', line)])
 	maxBlues = max([int(b) for b in re.findall(r'(\d+) blue', line)])
 
-	if maxReds <= 12 and maxBlues <= 14 and maxGreens <= 13: 
+	if maxReds <= 12 and maxGreens <= 13 and maxBlues <= 14: 
 		total += int(re.findall(r'(\d+)', line)[0])	
 	totalPower += maxReds * maxGreens * maxBlues
 	
