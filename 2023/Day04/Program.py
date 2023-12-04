@@ -1,5 +1,4 @@
 import re
-import collections
 
 with open('Input') as inFile:
 	lines = inFile.readlines()
@@ -7,8 +6,8 @@ with open('Input') as inFile:
 def getNumWinners(winString, haveString):
 	winners = re.findall(r'\d+', winString)
 	have = re.findall(r'\d+', haveString)
-	result = collections.Counter(winners) & collections.Counter(have)
-	return len(list(result.elements()))
+	result = list(set(winners) & set(have))
+	return len(list(result))
 
 total = 0
 for line in lines:
