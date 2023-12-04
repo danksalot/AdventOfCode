@@ -6,8 +6,7 @@ with open('Input') as inFile:
 def getNumWinners(winString, haveString):
 	winners = re.findall(r'\d+', winString)
 	have = re.findall(r'\d+', haveString)
-	result = list(set(winners) & set(have))
-	return len(list(result))
+	return len(list(set(winners) & set(have)))
 
 total = 0
 for line in lines:
