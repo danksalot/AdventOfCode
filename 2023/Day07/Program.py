@@ -1,4 +1,3 @@
-from functools import cmp_to_key
 from collections import Counter
 
 with open('Input') as inFile:
