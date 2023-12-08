@@ -9,8 +9,7 @@ def extractNode(nodeString):
 	name = nodeString[0:3]
 	left = nodeString[7:10]
 	right = nodeString[12:15]
-	return name, [left, right]
-	
+	return name, [left, right]	
 
 instructions = cycle(lines[0].strip())
 nodes = {}
