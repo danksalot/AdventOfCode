@@ -33,8 +33,6 @@ print('Part 1:', steps)
 currentNodes = [node for node in nodes if node[2] == 'A']
 stepSizes = []
 for node in currentNodes:
-	cn = node
-	finishingStates = []
 	steps = 0
 	for instruction in instructions:
 		steps += 1
@@ -46,5 +44,5 @@ for node in currentNodes:
 			stepSizes.append(steps)
 			break
 
-leastCommonMultiple = reduce(lambda x, y: np.lcm(x,y,dtype=object), stepSizes)
+leastCommonMultiple = reduce(lambda x, y: np.lcm(x, y, dtype=object), stepSizes)
 print('Part 2:', leastCommonMultiple)
