@@ -31,7 +31,7 @@ for instruction in instructions:
 print('Part 1:', steps)
 
 currentNodes = [node for node in nodes if node[2] == 'A']
-stepSizes = []
+cycleSizes = []
 for node in currentNodes:
 	steps = 0
 	for instruction in instructions:
@@ -41,8 +41,8 @@ for node in currentNodes:
 		elif instruction == 'R':
 			node = nodes[node][1]
 		if node[2] == 'Z':
-			stepSizes.append(steps)
+			cycleSizes.append(steps)
 			break
 
-leastCommonMultiple = reduce(lambda x, y: np.lcm(x, y, dtype=object), stepSizes)
+leastCommonMultiple = reduce(lambda x, y: np.lcm(x, y, dtype=object), cycleSizes)
 print('Part 2:', leastCommonMultiple)
