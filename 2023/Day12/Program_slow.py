@@ -1,5 +1,6 @@
 from more_itertools import distinct_permutations
 import re
+import functools
 
 with open('Input') as inFile:
 	lines = [x.strip() for x in inFile.readlines()]
@@ -7,7 +8,8 @@ with open('Input') as inFile:
 def fitsCondition(springs, condition):
 	brokenGroups = re.findall('(#+)', springs)
 	return [len(x) for x in brokenGroups] == [int(x) for x in condition]
-	
+
+@functools.lru_cache(maxsize=None)
 def getPerms(springs, condition):
 	numUnknown = springs.count('?')
 	numKnownBroken = springs.count('#')
