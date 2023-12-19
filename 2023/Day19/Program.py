@@ -91,11 +91,6 @@ print('Part 1:', total)
 # for p in acceptedPaths:
 # 	print(p)
 
-def filterRanges(category, newRange, oldRanges):
-	newRanges = deepcopy(oldRanges)
-	newRanges[category] = newRange
-	return newRanges
-
 def countCombinations(ranges, ruleId):
 	if ruleId == 'A':
 		combinations = (ranges['x'][1] - ranges['x'][0] + 1)
