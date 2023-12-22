@@ -42,7 +42,10 @@ def fillCubesBetween(a, b):
 		cubes.append(a)
 	return cubes
 
-def getSupportingBricks(brick, bricks):	
+knownSupportingBricks = {}
+def getSupportingBricks(brick, bricks):
+	if str(brick) in knownSupportingBricks:
+		return knownSupportingBricks[str(brick)]
 	supportingBricks = []
 	for cube in brick:
 		ax, ay, az = cube
@@ -52,17 +55,16 @@ def getSupportingBricks(brick, bricks):
 			if any(ax == bx and ay == by and az - 1 == bz for bx, by, bz in brick):
 				if brick not in supportingBricks:
 					supportingBricks.append(brick)
+	knownSupportingBricks[str(brick)] = supportingBricks
 	return supportingBricks
 
 def fall(bricks):
 	fell = True
 	fallen = []
 	while fell:
-		# print('Falling bricks...')
 		fell = False
 		for brick in bricks:
 			if len(getSupportingBricks(brick, bricks)) == 0 and min(z for x, y, z in brick) > 1:
-				# print('Brick falling!', brick)
 				for c in brick:
 					c[2] -= 1
 				fell = True
@@ -71,53 +73,20 @@ def fall(bricks):
 	return len(fallen)
 
 bricks = []
-
 for i in range(len(lines)):
 	ends = lines[i].split('~')
 	end1 = list(map(int, ends[0].split(',')))
 	end2 = list(map(int, ends[1].split(',')))
 	bricks.append(fillCubesBetween(end1, end2))
 
-# print(bricks)
-
 numFallen = fall(bricks)
-# print(numFallen)
-
-# with open('fallen', 'w') as outFile:
-# 	for brick in bricks:
-# 		outFile.write(str(brick) + '\n')
-
-# print(bricks)
-
-# def canBeRemoved(brick, bricks):
-# 	withoutBrickA = deepcopy(bricks)
-# 	withoutBrickA.remove(brick)
-# 	withoutBrickB = deepcopy(withoutBrickA)
-# 	fall(withoutBrickA)
-# 	canBeRemoved = True
-# 	for i in range(len(withoutBrickA)):
-# 		for j in range(len(withoutBrickA[i])):
-# 			for k in range(3):
-# 				if withoutBrickA[i][j][k] != withoutBrickB[i][j][k]:
-# 					canBeRemoved = False
-# 					continue
-# 	return canBeRemoved
-
-# for i in range(len(bricks)):
-# 	print('Checking brick', i)
-# 	if canBeRemoved(bricks[i], bricks):
-# 		print('Brick can be removed!', bricks[i])
-
-# print('Part 1:', len([b for b in bricks if canBeRemoved(b, bricks)]))
 
 candidatesForRemoval = deepcopy(bricks)
 for brick in bricks:
-	# print('Checking brick', brick)
 	supporting = getSupportingBricks(brick, bricks)
 	if len(supporting) == 1:
 		remove = supporting.pop()
 		if remove in candidatesForRemoval:
-			# print('Brick can not be removed!', remove)
 			candidatesForRemoval.remove(remove)
 
 print('Part 1:', len(candidatesForRemoval))
