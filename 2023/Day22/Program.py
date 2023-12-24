@@ -1,102 +1,67 @@
 from copy import deepcopy
 
-with open('fallen') as inFile:
-	lines = [x.strip() for x in inFile.readlines()]
+with open('Input') as inFile:
+	lines = [l.strip() for l in inFile.readlines()]
 
-def fillCubesBetween(a, b):
-	ax, ay, az = a
-	bx, by, bz = b
-	cubes = []
+def isSupported(brick, allCubes):
+	x1, y1, z1, x2, y2, z2, id = brick
+	below = z1 - 1
+	if below == 0:
+		return True
+	for x in range(x1, x2 + 1):
+		for y in range(y1, y2 + 1):
+			if (x, y, below) in allCubes:
+				return True
+	return False
 
-	if ax < bx:
-		cubes.append(a)
-		for x in range(ax+1, bx):
-			cubes.append([x, ay, az])
-		cubes.append(b)
-	elif bx < ax:
-		cubes.append(b)
-		for x in range(bx+1, ax):
-			cubes.append([x, ay, az])
-		cubes.append(a)
-	elif ay < by:
-		cubes.append(a)
-		for y in range(ay+1, by):
-			cubes.append([ax, y, az])
-		cubes.append(b)
-	elif by < ay:
-		cubes.append(b)
-		for y in range(by+1, ay):
-			cubes.append([ax, y, az])
-		cubes.append(a)
-	elif az < bz:
-		cubes.append(a)
-		for z in range(az+1, bz):
-			cubes.append([ax, ay, z])
-		cubes.append(b)
-	elif bz < az:
-		cubes.append(b)
-		for z in range(bz+1, az):
-			cubes.append([ax, ay, z])
-		cubes.append(a)
-	else:
-		cubes.append(a)
-	return cubes
+def fallOnce(bricks):
+	changed = False
+	newBricks = []
+	allCubes = set()
+	for (x1, y1, z1, x2, y2, z2, id) in bricks:
+		for x in range(x1, x2 + 1):
+			for y in range(y1, y2 + 1):
+				allCubes.add((x, y, z2))
 
-knownSupportingBricks = {}
-def getSupportingBricks(brick, bricks):
-	if str(brick) in knownSupportingBricks:
-		return knownSupportingBricks[str(brick)]
-	supportingBricks = []
-	for cube in brick:
-		ax, ay, az = cube
-		for brick in bricks:
-			if cube in brick:
-				continue
-			if any(ax == bx and ay == by and az - 1 == bz for bx, by, bz in brick):
-				if brick not in supportingBricks:
-					supportingBricks.append(brick)
-	knownSupportingBricks[str(brick)] = supportingBricks
-	return supportingBricks
-
-def fall(bricks):
-	fell = True
-	fallen = []
-	while fell:
-		fell = False
-		for brick in bricks:
-			if len(getSupportingBricks(brick, bricks)) == 0 and min(z for x, y, z in brick) > 1:
-				for c in brick:
-					c[2] -= 1
-				fell = True
-				if brick not in fallen:
-					fallen.append(brick)
-	return len(fallen)
+	for brick in bricks:
+		x1, y1, z1, x2, y2, z2, id = brick
+		if not isSupported(brick, allCubes):
+			changed = True
+			newBricks.append((x1, y1, z1 - 1, x2, y2, z2 - 1, id))
+		else:
+			newBricks.append(brick)
+	return newBricks, changed
 
 bricks = []
 for i in range(len(lines)):
-	ends = lines[i].split('~')
-	end1 = list(map(int, ends[0].split(',')))
-	end2 = list(map(int, ends[1].split(',')))
-	bricks.append(fillCubesBetween(end1, end2))
+	line = lines[i].replace('~', ',')
+	coords = [int(c) for c in line.split(',')]
+	bricks.append(tuple(coords + [i]))
 
-numFallen = fall(bricks)
+changed = True
+while changed:
+	bricks = sorted(bricks, key=lambda b: b[2])
+	bricks, changed = fallOnce(bricks)
 
-candidatesForRemoval = deepcopy(bricks)
-for brick in bricks:
-	supporting = getSupportingBricks(brick, bricks)
-	if len(supporting) == 1:
-		remove = supporting.pop()
-		if remove in candidatesForRemoval:
-			candidatesForRemoval.remove(remove)
+def safeToRemove(brick, bricks):
+	bricksCopy = deepcopy(bricks)
+	bricksCopy.remove(brick)
+	_, changed = fallOnce(bricksCopy)
+	return not changed
 
-print('Part 1:', len(candidatesForRemoval))
+safeToRemove = [b for b in bricks if safeToRemove(b, bricks)]
+print('Part 1:', len(safeToRemove))
 
 sum = 0
-for brick in [b for b in bricks if b not in candidatesForRemoval]:
+for brick in [b for b in bricks if b not in safeToRemove]:
 	test = deepcopy(bricks)
 	test.remove(brick)
-	numFallen = fall(test)
-	print('Brick', brick, 'removal results in', numFallen, 'fallen bricks')
-	sum += numFallen
+	changed = True
+	while changed:
+		test, changed = fallOnce(test)
+
+	allDiff = set(bricks).symmetric_difference(test)
+	sum += len(allDiff) // 2
 
 print('Part 2:', sum)
+
